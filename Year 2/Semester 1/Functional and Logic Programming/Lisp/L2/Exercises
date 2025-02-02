@@ -1,1 +1,154 @@
+;a binary tree is memorised in the following two ways:
+; 1. (node  no-subtrees  list-subtree-1  list-subtree-2  ...) ;ex: (a 2 b 0 c d 0 e 0)
+; 2.(node (list-subtree-1) (list-subtree-2) ...) ;ex (a (b) (c (d) (e))))
 
+(defun leftAux (x nrVert nrEdges)
+  (cond ; nrVert = nrEdges+1
+    ((= (+ nrVert 1) (+ (+ nrEdges (cadr x)) 1)) (list (car x) (cadr x)))
+    (t (append (list (car x) (cadr x)) (leftAux (cddr x) (+ nrVert 1) (+ nrEdges (cadr x)))))
+  )
+)
+
+(defun leftSubtree (x)
+  (if (null (cddr x))
+    nil
+    (leftAux (cddr x) 0 0)
+  )
+)
+
+(defun rightAux (x nrVert nrEdges)
+  (cond ; nrVert = nrEdges+1
+    ((= (+ nrVert 1) (+ (+ nrEdges (cadr x)) 1)) (cddr x))
+    (t (rightAux (cddr x) (+ nrVert 1) (+ nrEdges (cadr x))))
+  )
+)
+
+(defun rightSubtree (x)
+  (if (null (cddr x))
+    nil
+    (rightAux (cddr x) 0 0)
+  )
+)
+
+(print (leftSubtree '(A 2 B 1 B2 0 C 2 D 0 E 0)))
+(print (rightSubtree '(A 2 B 1 B2 0 C 2 D 0 E 0)))
+(print (leftSubtree '(A 0)))
+(print (rightSubtree '(A 0)))
+
+
+;for a given tree of type (1) return the path from the root node to a certain given node ex
+
+(defun pathrootnode1(l x)
+  (cond
+  ((null l) nil)
+  ((equal (car  l) x) (list (car l)))
+  (t (cond
+    ((not (null (pathrootnode1 (leftSubtree l) x))) (cons (car l) (pathrootnode1 (leftSubtree l) x)))
+    ((not (null (pathrootnode1 (rightSubtree l) x))) (cons (car l) (pathrootnode1 (rightSubtree l) x)))
+    (t nil)
+  ))
+  )
+)
+
+(print (pathrootnode1 '(a 2 b 1 b2 0 c 2 d 0 e 1 f 1 g 0) 'g))
+
+;return the list of nodes on the k-th  level of a tree of type1
+
+(defun kthlevel(l k)
+  (cond
+    ((null l) nil)
+    ((> k 0) (append (kthlevel (leftSubtree l ) (- k 1)) (kthlevel (rightSubtree l) (- k 1))))
+    ((= k 0) (list (car l)))
+  )
+)
+
+(print (kthlevel '(a 2 b 1 b2 0 c 2 d 0 e 1 f 1 g 0) '3))
+
+;convert a tree of type 2 to type 1
+
+(defun type2to1 (l)
+  (cond
+    ((cddr l) (append (list (car l)) (list '2) (type2to1 (cadr l)) (type2to1 (caddr l)))) ;daca exista cddr l, 
+    ;adica daca lista fara primele doua elemente nu e nula, atunci facem o lista cu car l, cifra 2 , si lista returnata 
+    ;de apelu recursiv pe cadr l (lista subtree root) si caddr l (lista subtree subtree root)
+    ((cdr l)  (append (list (car l)) (list '1) (type2to1 (cadr l)))) ;daca nu avem cddr l dar avem cdr , inseamna ca
+    ;roou are numa un subtree, si atunci facem o lista cu cifra 1 si apelam recursiv functia pe cadr l
+    ((car l) (append (list (car l)) (list '0))) ; daca ave numa car l inseamna ca avem numa root si atunci 
+    ;facem o lista cu rootu si 0 pt ca avem 0 subtreeuri
+   ((null l) nil)  ;altfel, returnam nil
+  )
+)
+
+;return the level of a node in a tree of type 1, the root being on level 0
+
+(defun depthnode(l n)
+  (cond
+    ((null l) -12)
+    ((equal (car l) n) 0)
+    (t (+ (max (depthnode (leftSubtree l) n) (depthnode (rightSubtree l) n)) 1))
+  )
+)
+
+(print (depthnode '(a 2 b 1 b2 0 c 2 d 0 e 1 f 1 g 0) 'g))
+
+;return the list of nodes of type 1 accesed inorder
+
+(defun inordertype1 (l)
+  (cond
+    ((null l) nil)
+    ((and (leftSubtree l) (rightSubtree l)) (append (inordertype1 (leftSubtree l)) (list (car l)) (inordertype1 (rightSubtree l))))
+    ((leftSubtree l) (append (inordertype1 (leftSubtree l)) (list (car l))))
+    (t (list (car l)))
+  )
+)
+
+(print (inordertype1 '(a 2 b 1 b2 0 c 2 d 0 e 1 f 1 g 0)))
+
+;return the level (and corresponding list of nodes) with maximum number of ndes for a tree of type 2
+
+(defun get1 (a) 1)
+(defun listlength (l) 
+  (apply #'+ (mapcar #'get1 l))
+)
+
+(print (length '(1 4 10 a b)))
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+;determine the list of nodes accesed in preorder in a tree of type b2
+(defun preordertype2 (l)
+  (cond
+    ((null l) nil)
+    ((atom (car l)) (cons (car l) (preordertype2 (cdr l))))
+    ((list (car l)) (cons (car (car l)) (preordertype2 (cadr l)) ))
+  )
+)
+
+;(print (preordertype2 '(a (b) (c (d) (e)))))
+
+;for a given tree of type 2 return the path from the root to a certain given node
+
+(defun pathrootnode2 (x e)
+  (cond
+    ((null x) nil)
+    ((equal (car x) e) (list (car x)))
+    ((pathrootnode2 (cadr x) e) (cons (car x) (pathrootnode2 (cadr x) e)))
+    ((pathrootnode2 (caddr x) e) (cons (car x) (pathrootnode2 (caddr x) e)))
+  )
+)
+
+(print (pathrootnode2 '(a (b) (c (d) (e (e2 (e3) (cd))))) 'c))
