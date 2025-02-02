@@ -1,0 +1,256 @@
+;write a function to return the n-th elemenr of a list,
+;or nil if such an element does not exist
+
+(defun nthelem(l n poz)
+  (cond
+    ((null l) nil) ;daca lista e goala returnam nil
+    ((= poz n) (car l))
+    (t (nthelem (cdr l) n (+ 1 poz)))
+  )
+)
+
+(defun elem(l n)
+  (nthelem l n 1)
+)
+
+(print (elem '( 1 2 3 4 5 6 7 8) 5))
+
+;write a function to check whether an atom e is a member of a lista;
+;which is not necessarily linear
+
+
+
+
+;write a function to return the dot product of two vectors 
+(defun dot-product (v1 v2)
+  (cond
+    ((or (null v1) (null v2)) 0) 
+    (t (+(*(car v1) (car v2)) (dot-product(cdr v1) (cdr v2))))
+  )
+)
+
+;write a function to return the depth of a list
+
+(defun  depth(l)
+  (cond
+    ((atom l) 0) ;daca l ajunge sa fie un singur atom, atunci depthu e 10
+    (t (+ 1 (apply 'max (mapcar #'depth l))))
+  )
+)
+
+(print (depth '(1 2 3 (1 2 3 (1 2 3) 37 (1) 8) 10)))
+
+;write a function to return the intersection of two sets
+
+;write a function that inserts in a linear list a given atom after the 2nd,4th,6th element
+(defun insert(l e poz)
+  (cond
+    ((null l) nil)
+    ((= (mod poz 2) 0) (cons e (insert (cdr l) e (+ 1 poz)) ))
+    (t (cons (car l) (insert (cdr l) e (+ 1 poz))))
+  )
+)
+
+(defun insereaza (l e)
+  (insert l e 1)
+)
+
+(print (insereaza '(1 2 3 4 5 6 7 8) 0))
+
+;write a function to return the sum of two vectors
+
+(defun sumvectors(v1 v2)
+  (cond
+    ((or (null v1) (null v2)) nil)
+    (t (cons (+ (car v1) (car v2)) (sumvectors (cdr v1) (cdr v2))))
+  )
+)
+
+
+;write  function  to get from a given list the list of all atoms, on any level
+(defun listatoms(l)
+  (cond
+    ((null l) nil)
+    ((atom (car l)) (cons (car l) (listatoms(cdr l))))
+    (t (append (listatoms (cdr l)) (listatoms (car l))))
+  )
+)
+
+(print (listatoms '(((1 2) 3)(4 5))))
+
+;write a function that , with a list given as parameter, inverts only continuos sequences of atoms
+
+;write a list to return the maximum value of the numerical atoms from a lis
+;at superficial level
+
+;(defun maximal(l)
+ ; (cond
+  ;  ((null l) nil)
+   ; ((numberp (car l)) (max (car l) maximal (cdr l)))
+  ;  (t (maximal (cdr l)))
+  ;)
+;)
+
+;(print (maximal '(1 2 8 7 8 2 8 3)))
+
+;write twice the nth element of a linear list
+
+;write a function to return an association list with the two lists given as parameterss
+
+(defun association(l1 l2)
+  (cond
+    ((or (null l1) (null l2)) nil)
+    (t (cons (cons (car l1) (car l2)) (association (cdr l1) (cdr l2))))
+  )
+)
+
+(print (association '(1 2 3) '(5 6 7)))
+
+;write a function to return the number of all numerical atoms in a list at superficial level
+
+(defun numbernumbers(l)
+  (cond
+    ((null l) 0)
+    ((numberp (car l)) (+ 1 (numbernumbers(cdr l))))
+    (t (numbernumbers (cdr l)))
+  )
+)
+
+(print (numbernumbers '(1 2 (a 4) 10 c 9)))
+
+
+
+;write a function to test whether a list is linear
+
+(defun linearlist(l)
+  (cond
+    ((null l) t)
+    ((atom (car l)) (linearlist(cdr l)))
+    (t nil)
+  )
+)
+
+(print (linearlist '(1 2 (3) 4 5)))
+
+;write a funtion to replace the first ocurence of an element e in a given list with an other element o
+
+;write a function to insert an element  E on the nth position of a linear list
+
+(defun inss(l e n pos)
+  (cond 
+    ((null l) nil)
+    ((= pos n) (cons e l))
+    (t (cons (car l) (inss (cdr l) e n (+ 1 pos))))
+  )
+)
+
+(defun insss(l e n)
+  (inss l e n 1)
+)
+
+(print (insss '(1 2 3 4 5 6 7 8) 0 5))
+
+;write a function to return the sum of all numerical atoms in a list
+
+;(defun sumnumber(l)
+ ; (cond
+  ;  ((null l) 0)
+   ; ((numberp (car l)) (+ (car l) (sumnumber(cdr l))))
+;    ((atom (car l)) sumnumber(cdr l))
+ ;   (t (+ (sumnumber (car l)) (sumnumber (cdr l))))
+  ;)
+;)
+
+;(print (sumnumber '(1 2 (1 2) 1)))
+
+;write a function to return the set of all sublists of a given linear list
+(defun setsublists(l)
+ (cond
+    ((null l) nil)
+    ((listp (car l)) (cons (car l) (append (setsublists (car l)) (setsublists (cdr l)))))
+    (t (setsublists  (cdr l)))
+  )
+)
+
+(print (setsublists '((1 2 3)((4 5) 6))))
+
+;write a function to test the equality of two setsublists
+(defun setequality(set1 set2)
+(cond
+  ((null set1) (null set2))
+  ((equal (car set1) (car set2)) (setequality (cdr set1) (cdr set2)))
+  (t nil)
+)
+)
+
+(print (setequality '(1 2 3 4 5) '(1 2 3 4 5 6)))
+
+
+;return the union of two setsublists
+(defun uniune(set1 set2)
+  (cond
+    ((null set1) set2)
+    ((null set2) set1)
+
+    ((equalp (car set1) (car set2)) (cons (car set1) (uniune (cdr set1) (cdr set2))))
+    (t (cons (cons (car set1) (car set2)) (uniune (cdr set1) (cdr set2))))
+  )
+)
+
+(print (uniune '(1 2 3 4 5) '(3 4 5 6 7 8)))
+
+; b) Write a function to test if a linear list of integer numbers has a "valley" aspect (a list has a valley aspect if the items decrease to a certain point and then increase. Eg. 10 8 6 17 19 20). A list must have at least 3 elements to fullfill this condition.
+
+( defun valley_main (l)
+  (cond
+   ( ( < (len l) 3) NIL)
+   ( ( < (car l) (cadr l ) ) NIL)
+   ( T (valley l 0) )
+  )
+)
+
+( defun len (l)
+  (cond
+   ( (null l) 0)
+   ( T ( + 1 (len (cdr l) ) ) )
+   ))
+
+( defun valley (l flag) 
+  (cond
+   ( ( null (cdr l) ) ( = flag 1))
+   ( ( and (> (car l) (cadr l) ) (= flag 1 ) ) NIL )
+   ( ( and (< (car l) (cadr l) ) (= flag 0 ) ) (valley (cdr l) 1) )
+   ( T (valley (cdr l) flag))
+  )
+)
+
+;function to return the product of all numerical atoms in a list, at any level
+
+;(defun prodnumber(l)
+ ; (cond
+  ;  ((null l) 1)
+   ; ((numberp (car l)) (* (car l) (prodnumber (cdr l))))
+  ;  ((atom (car l)) prodnumber (cdr l))
+   ; (t (* (prodnumber (car l)) (prodnumber (cdr l))))
+  ;)
+;)
+
+;(print (prodnumber '(1 2 (1 2) 1))) merge dar da eroare???????
+
+;eliminate from the list all elements from n to n steps
+
+(defun eliminate(l n pos)
+  (cond
+    ((null l) nil)
+    ((= (mod pos n) 0) (eliminate (cdr l) n (+ 1 pos)))
+    (t (cons (car l) (eliminate (cdr l) n (+ 1 pos))))
+  )
+)
+
+(defun elim (l n)
+  (eliminate l n 1)
+)
+
+(print (elim '(1 2 3 4 5 6 7 8 9 10 11 12 13 14 15) 2))
+
+
