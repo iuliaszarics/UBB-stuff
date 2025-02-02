@@ -1,0 +1,14 @@
+(defun node-member (node tree)
+  (cond
+    ((atom tree) (eq node tree))   ;daca treeul e atom veddem daca matches the node
+    (t (or (eq node (car tree))  ;verificam daca rootul matchuieste sau, reursiv, daca subtreeurile 
+           (check-subtrees node (cdr tree))))))
+
+(defun check-subtrees (node subtrees)
+  (cond
+    ((null subtrees) nil) ;daca nu mai sunt subtreeuri de verificat returnam nil
+    ((node-member node (car subtrees)) t) ; daca primul elem din subtree e nodeul cautat returnam t
+    (t (check-subtrees node (cdr subtrees))))) ; altfel verificam in continuare pe celellate subtreeuri
+
+(print (node-member 'b '(a (b (c)) (d) (e (f))))) 
+(print (node-member 'x '(a (b (c)) (d) (e (f))))) 
