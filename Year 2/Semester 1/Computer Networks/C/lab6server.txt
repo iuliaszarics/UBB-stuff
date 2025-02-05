@@ -1,0 +1,32 @@
+  GNU nano 7.2                                                                          lab6server.c                                                                                   
+#include <string.h>
+#include <unistd.h>
+
+int main(int argc, char* argv[]){
+        int socket_fd = socket(AF_INET, SOCK_DGRAM,0);
+        if(socket_fd < 0){
+                perror("Error at creating socket\n");
+                exit(-1);
+        }
+
+        struct sockaddr_in receiver_addr;
+        receiver_addr.sin_family = AF_INET;
+        receiver_addr.sin_port=htons(1234);
+        receiver_addr.sin_addr.s_addr = inet_addr("172.30.248.251");
+
+
+        struct sockaddr_in sender_addr;
+        socklen_t sender_addr_len;
+
+        char input_buffer[100];
+        char output_buffer[100];
+        strcpy(output_buffer,"mesaj f turbat\0");
+        while(1){
+                sendto(socket_fd, output_buffer, strlen(output_buffer)+1, 0, (const struct sockaddr*)&receiver_addr, sizeof(receiver_addr));
+                //sleep(2);
+                recvfrom(socket_fd, input_buffer, 100, 0, (struct sockaddr*)&sender_addr, &sender_addr_len);
+                printf("%s\n", input_buffer);
+                sleep(2);
+        }
+        return 0;
+}

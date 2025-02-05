@@ -1,0 +1,59 @@
+#include <stdio.h>
+#include <unistd.h>
+#include <stdlib.h>
+#include <string.h>
+#include <sys/socket.h>
+#include <sys/types.h>
+#include <netinet/ip.h>
+#include <netinet/in.h>
+#include <arpa/inet.h>
+#include <pthread.h>
+
+int main()
+{
+    struct sockaddr_in server;
+    int c=socket(AF_INET,SOCK_STREAM,0);
+    if(c<0)
+    {
+        perror("eroare socket\n");
+        return -1;
+    }
+    int udp=socket(AF_INET,SOCK_DGRAM,0);
+    if(udp<0){
+        perror("eroare socket udp\n");
+        return -1;
+    }
+    memset(&server,0,sizeof(server));
+    server.sin_family=AF_INET;
+    server.sin_port=htons(1234);
+    server.sin_addr.s_addr=inet_addr("172.20.10.7");
+
+    struct sockaddr_in sender;
+    socklen_t sender_len;
+
+    struct sockaddr_in whocansend;
+    memset(&whocansend,0,sizeof(whocansend));
+    whocansend.sin_family=AF_INET;
+    whocansend.sin_addr.s_addr=INADDR_ANY;
+    whocansend.sin_port=htons(2345);
+    if(connect(c,(struct sockaddr*)&server,sizeof(server))<0)
+    {
+        perror("eroare connect\n");
+        return -1;
+    }
+    int16_t value;
+    printf("enter negative number: \n");
+    scanf("%hd",&value);
+    value=htons(value);
+    send(c,(void*)&value,sizeof(value),0);
+    if(bind(udp,(struct sockaddr*)&whocansend,sizeof(whocansend))<0)
+    {
+        perror("eroare la bind\n");
+        return -1;
+    }
+    recvfrom(udp,(void*)&value,sizeof(value),0,(struct sockaddr*)&sender,&sender_len);
+    value=ntohs(value);
+    printf("valoare: %d\n",value);
+    close(c);
+
+}

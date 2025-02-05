@@ -1,0 +1,25 @@
+#include <stdio.h>
+#include <sys/socket.h>
+#include <string.h>
+#include <netinet/ip.h>
+#include <arpa/inet.h>
+
+int main(int argc, char* argv[]) {
+        int socket_fd;
+        struct sockaddr_in server;
+        socket_fd = socket(AF_INET, SOCK_STREAM,0);
+        if(socket_fd < 0) {
+                printf("Nu s-a putut crea socketului\n");
+                return -1;
+        }
+        memset(&server, 0, sizeof(server));
+        server.sin_port = htons(1234);
+        server.sin_family = AF_INET;
+        server.sin_addr.s_addr = inet_addr("172.30.246.239");
+        //      char buffer[100];
+        if(connect(socket_fd, (struct sockaddr*) &server, sizeof(server)) < 0) {
+                printf("Eroare la conectare.\n");
+                return -1;
+        }
+        return 0;
+}

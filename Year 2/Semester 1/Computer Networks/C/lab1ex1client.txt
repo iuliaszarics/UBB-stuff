@@ -1,0 +1,46 @@
+#include <stdio.h>
+#include <unistd.h>
+#include <string.h>
+#include <sys/types.h>
+#include <sys/socket.h>
+#include <netinet/ip.h>
+#include <netinet/in.h>
+#include <arpa/inet.h>
+
+int main()
+{
+        struct sockaddr_in server;
+        uint16_t array[100];
+        uint16_t n,sum;
+        int client_fd=socket(AF_INET,SOCK_STREAM,0);
+        if(client_fd<0)
+        {
+                printf("eroare la socket\n");
+                return 1;
+        }
+        memset(&server,0,sizeof(server));
+        server.sin_port=htons(1234);
+        server.sin_family=AF_INET;
+        server.sin_addr.s_addr=inet_addr("127.0.0.1");
+        if(connect(client_fd,(struct sockaddr*)&server,sizeof(server))<0)
+        {
+                printf("erare conectare\n");
+                return 1;
+        }
+        printf("Enter the number of elements: \n");
+        scanf("%hu",&n);
+        n=htons(n);
+	        send(client_fd,&n,sizeof(n),0);
+        n=ntohs(n);
+        for(int i=0;i<n;i++)
+        {
+                printf("array[%d] = ",i);
+                scanf("%hu",&array[i]);
+                array[i]=htons(array[i]);
+        }
+        send(client_fd,array,n*sizeof(uint16_t),0);
+        recv(client_fd,&sum,sizeof(sum),0);
+        sum=ntohs(sum);
+        printf("the sum of the array is %hu\n",sum);
+        close(client_fd);
+}

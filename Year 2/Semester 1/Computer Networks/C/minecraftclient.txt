@@ -1,0 +1,79 @@
+#include <stdio.h>
+#include <unistd.h>
+#include <stdlib.h>
+#include <string.h>
+#include <sys/socket.h>
+#include <sys/types.h>
+#include <netinet/in.h>
+#include <netinet/ip.h>
+#include <arpa/inet.h>
+#include <sys/select.h>
+#include <pthread.h>
+
+void* get_minecraft(void* arg){
+    struct sockaddr_in server;
+    int udp=socket(AF_INET,SOCK_DGRAM,0);
+    if(udp<0){
+        perror("eroare socket \n");
+        return NULL;
+    }
+    memset(&server,0,sizeof(server));
+    server.sin_family=AF_INET;
+    server.sin_port=htons(5678);
+    server.sin_addr.s_addr=INADDR_ANY;
+    socklen_t server_len;
+    int yes=1;
+    setsockopt(udp,SOL_SOCKET,SO_REUSEADDR,&yes,sizeof(yes));
+    if(bind(udp,(struct sockaddr*)&server,sizeof(server))<0){
+        perror("eroare bind\n");
+        return NULL;
+    }
+    printf("Am ajuns aici boss1\n");
+    struct sockaddr_in sender;
+    socklen_t sender_len;
+    char matrice[10][10];
+    while(1){
+        recvfrom(udp,(void*)matrice,sizeof(matrice),0,(struct sockaddr*)&sender,&sender_len);
+        for(int i=0;i<10;i++)
+        {
+            for(int j=0;j<10;j++)
+            {
+                printf("%c ", matrice[i][j]);
+            }
+            printf("\n");
+        }
+        printf("\n");
+    }
+     
+    return NULL;
+}
+
+int main(){
+    struct sockaddr_in server;
+    int client_fd=socket(AF_INET,SOCK_STREAM,0);
+    if(client_fd<0){
+        perror("nuuuuu socket\n");
+        return -1;
+    }
+    memset(&server,0,sizeof(server));
+    server.sin_family=AF_INET;
+    server.sin_port=htons(6789);
+    server.sin_addr.s_addr=inet_addr("192.168.56.58");
+
+    if(connect(client_fd,(struct sockaddr*)&server,sizeof(server))<0);
+    pthread_t minecraft;
+    if(pthread_create(&minecraft,NULL,get_minecraft,NULL)<0){
+        perror("eroare minecraft\n");
+        return -1;
+    }
+    while(1){
+        char msg[100];
+        printf("The message is: ");
+        fgets(msg,100, stdin);
+        send(client_fd, msg, strlen(msg),0);
+        char c;
+        recv(client_fd, (void*)&c, 1, 0);
+        printf("The char is: %c\n", c);
+
+    }
+}
