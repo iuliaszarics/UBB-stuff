@@ -3,7 +3,7 @@
 This repository contains all my computer science homework and assignments from my studies at UBB University, Cluj-Napoca.
 It is incomplete as I've lost most files from my laptop in the middle of the second semester from the first year :( .
 
-Subject that I've studied so far:
+Subjects that I've studied so far:
 
 Year 1:
 First semester: Computer Systems Architecture, Fundamentals of Programming, Algebra, Computational Logic, Analysis
