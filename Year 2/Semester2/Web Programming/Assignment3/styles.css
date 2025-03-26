@@ -1,0 +1,535 @@
+
+body {
+    margin: 0;
+    font-family: sans-serif;
+    background-color: black;
+    color: white;
+}
+
+.top-nav {
+    display: flex;
+    justify-content: normal;
+    align-items: center;
+    padding: 0; 
+    background-color: black;
+    max-width: 90vw;
+    margin: 10px auto;
+}
+
+
+
+.content-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0;
+    width: 100%; 
+    border-bottom: 3px solid white;
+}
+
+.left {
+    display: flex;
+    height: 40px;
+    top:0px;
+    margin-bottom: 0px;
+}
+
+.content-wrapper{
+    position:sticky;
+    z-index:9998;
+    pointer-events:none;
+}
+
+
+
+.hamburger {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    cursor: pointer;
+    margin-left: 0; 
+    padding-left: 0; 
+    margin-right: 20px;
+}
+
+
+.hamburger div {
+    width: 22px;
+    height: 3px;
+    background-color: white;
+}
+
+.gaza:hover {
+    text-decoration: underline;
+    color:white;
+}
+
+.italia:hover {
+    text-decoration: underline;
+    color:white;
+}
+
+.nasa:hover {
+    text-decoration: underline;
+    color:white;
+}
+
+.lebanon:hover {
+    text-decoration: underline;
+    color:white
+}
+
+.hong:hover {
+    text-decoration: underline;
+    color:white;
+}
+
+.eva:hover{
+    text-decoration: underline;
+    color:white;
+}
+
+.logo {
+    font-size: 24px;
+    font-weight: bold;
+    color: #ff3d00;
+    margin-right:10px;
+    margin-left: 20px;
+}
+
+.nav-links {
+    flex-grow: 1;
+    text-align: left;
+}
+
+.nav-links a {
+    color: white;
+    text-decoration: none;
+    margin: 0 10px;
+    font-size: 16px;
+}
+
+.nav-links a:hover {
+    text-decoration: underline ;
+    color:white;
+}
+
+.big-news-text{
+    font-size: 44px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.big-news-text:hover {
+    text-decoration: underline;
+    color:white;
+}
+
+
+
+.right {
+    display: flex;
+    align-items: center;
+    font-size:15px;
+    font-weight:500;
+    line-height: 20px;
+    box-sizing: inherit;
+    gap: 30px;
+}
+
+.global-news{
+    font-size: 20px;
+    line-height: 26px;
+    font-weight:500 !important;
+    letter-spacing: 0;
+
+}
+
+.right a {
+    color: white;
+    text-decoration: none;
+    font-size: 14px;
+}
+
+.right a:hover {
+    text-decoration: underline;
+    color:white;
+}
+
+.header__menu-icon-svg {
+    width: 28px;
+    height: 28px;
+    fill: white; 
+    cursor: pointer; 
+    transition: transform 0.2s ease-in-out;
+}
+
+.middle-headline{
+    font-size: 20px;
+    line-height: 26px;
+    font-weight:500 !important;
+    letter-spacing: 0;
+}
+
+.middle-headline:hover {
+    text-decoration: underline;
+    color:white;
+}
+
+.live {
+    color: white; 
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    gap: 5px; 
+    margin-left: 30px;
+}
+
+.live::before {
+    content: "●";  
+    color: red; 
+    font-size: 14px; 
+}
+
+.live:hover {
+    text-decoration: underline;
+    color:white;
+}
+
+.watch{
+    font-size: 15px;
+    line-height: 22px;
+    letter-spacing: .5px;
+    margin-right:50px;
+    font-weight:500;
+}
+
+.listen{
+    font-size: 15px;
+    line-height: 22px;
+    letter-spacing: .5px;
+    margin-right:20px;
+    padding-right: 20px;
+    font-weight:500;
+}
+
+.right {
+    display: flex;
+    align-items: center;
+    gap: 10px; 
+}
+
+.search-btn {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.search-icon {
+    width: 18px;  
+    height: 18px;
+    fill: white;  }
+
+.sign-in {
+    background: transparent;
+    border: 1px solid white;
+    padding: 5px 12px;
+    color: white;
+    font-size: 14px;
+    border-radius: 7px;
+    cursor: pointer;
+}
+
+.us:hover {
+    text-decoration: underline;
+    color:white;
+}
+
+.main{
+    padding-left: 30px;
+    padding-right: 30px;
+
+}
+
+.text-tigrii{
+    font-size: 20px;
+    line-height: 24px;
+    font-family: sans-serif;
+    font-weight: 500;
+    padding:0;
+    margin:0;
+    letter-spacing: 0;
+}
+
+.middle-text{
+    font-size:16px;
+    line-height: 22px;
+    letter-spacing: .5px;
+    justify-content: center;
+}
+
+.middle-text:hover {
+    text-decoration: underline;
+    color:white;
+}
+
+.p:hover {
+    text-decoration: underline;
+    color:white;
+}
+
+.video:hover{
+    opacity:0.5;
+}
+
+.tigrii-photo:hover {
+    opacity: 0.5;
+}
+
+.news-bar {
+    box-sizing: inherit;
+    line-height: 22px;
+    letter-spacing: 0;
+    color: #0c0c0c;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 16px;
+    font-weight: 400;
+    text-align: center; 
+    margin: 0 auto; 
+    width: 80%;
+    margin-top: 30px;
+    margin-bottom: 10px;
+}
+
+
+.middle-bottom-photo
+{
+    height: 200px;
+    width: 100%;
+    border-radius: 5px;
+}
+
+.middle-bottom-photo:hover{
+    opacity:0.5;
+}
+
+
+.news-bar span {
+    margin: 0 5px;
+    white-space: nowrap;
+}
+
+.big-news-photo {
+    position: relative; 
+}
+
+.big-news-photo:hover{
+    opacity:0.5;
+}
+
+.small-overlay {
+    position: absolute;
+    bottom: 10px; 
+    left: 10px; 
+    width: 130px; 
+    height: auto;
+    border-radius: 5px;
+
+}
+
+.arrow {
+    display: inline-block;
+    width: 0;
+    height: 0;
+    border-left: 4px solid transparent;
+    border-right: 4px solid transparent;
+    border-top: 6px solid grey; 
+    margin-left: 5px; 
+}
+  
+
+.small-overlay img {
+    width: 100%;
+    border-radius: 5px;
+}
+
+.small-overlay img:hover {
+    width: 100%;
+    border-radius: 5px;
+    opacity: 0.5;
+}
+
+.middle-first-photo{
+    position:relative;
+}
+
+.middle-first-photo:hover{
+    opacity:0.5;
+}
+
+.small-overlay2{
+    position: absolute;
+    bottom: 10px; 
+    left: 10px; 
+    width: 100px; 
+    height: auto;
+    border-radius: 5px;
+}
+
+.small-overlay2 img {
+    width: 100%;
+    border-radius: 5px;
+}
+
+.small-overlay2 img:hover {
+    width: 100%;
+    border-radius: 5px;
+    opacity: 0.5;
+}
+
+
+.container {
+    display: flex;
+    justify-content: space-between; 
+    gap: 20px; 
+    padding: 20px;
+    max-width: 90vw; 
+    margin: 0 auto; 
+}
+
+.text-under-trump-photo{
+    font-size:20px;
+    line-height: 26px;
+    font-weight:500 !important;
+    letter-spacing: 0;
+    color:#0c0c0c;
+    font-family: sans-serif;
+}
+
+.text-under-trump-photo:hover {
+    text-decoration: underline;
+}
+
+.text-under-text-under-trump-photo{
+    font-family: sans-serif;
+    font-size: 16px;
+    font-weight: 400;
+    letter-spacing: .5;
+    line-height: 22px;
+}
+
+.text-under-text-under-trump-photo:hover {
+    text-decoration: underline;
+}
+
+.red {
+    color: red;
+}
+
+.left-column {
+    flex: 1.78; 
+}
+
+.middle-column {
+    flex: 1.5;
+}
+
+.right-column {
+    flex: 1.1; 
+}
+
+.left-column, .middle-column, .right-column {
+    background-color: black; 
+    color: white; 
+    padding: 5px;
+    border-radius: 8px; 
+}
+
+img {
+    width: 100%;
+    height: auto;
+    display: block;
+    border-radius: 5px;
+}
+
+.img:hover{
+    opacity:0.5;
+}
+
+
+.content-item {
+    display:flex;
+    align-items: center; 
+    color: white; 
+    padding: 0px;
+    max-width: 400px; 
+    border-bottom: 1px solid grey;
+    border-top: 1px solid grey;
+}
+
+.blobfish-photo img {
+    width: 100px; 
+    height: auto;
+    margin-right: 10px; 
+    border-radius: 5px; 
+    margin-bottom: 0;
+}
+
+.blobfish-photo img:hover{
+    opacity:0.5;
+}
+
+.span:hover{
+    text-decoration: underline;
+}
+
+.blobfish-text {
+    flex: 1; 
+    font-size: 16px;
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: 400;
+    letter-spacing: .5px;
+    line-height: 22px;
+}
+
+.blobfish-text:hover {
+    text-decoration: underline;
+}
+
+hr {
+    border: 0; 
+    height: 1px; 
+    background-color: grey; 
+}
+
+
+
+.last-photo{
+
+    width: 100px; 
+    height: auto;
+    margin-right: 10px; 
+    border-radius: 5px; 
+}
+
+.last-photo:hover{
+    opacity:0.5;
+}
+
+.last-text {
+    flex: 1; 
+    font-size: 16px;
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: 400;
+    letter-spacing: .5px;
+    line-height: 22px;
+}
+
+
+.last-text:hover {
+    text-decoration: underline;
+}
