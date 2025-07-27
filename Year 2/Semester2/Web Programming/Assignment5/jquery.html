@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Assignment5</title>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <style>
+    body {
+      margin: 0;
+      overflow: hidden;
+      font-family: Arial, sans-serif;
+    }
+
+    #scoreboard {
+      position: fixed;
+      top: 10px;
+      left: 10px;
+      background: #fff;
+      padding: 10px;
+      border-radius: 5px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.2);
+      font-size: 20px;
+    }
+
+    .target {
+      position: absolute;
+      width: 80px;
+      height: 80px;
+      cursor: pointer;
+    }
+
+    .target2 {
+      position: absolute;
+      width: 80px;
+      height: 80px;
+      cursor: pointer;
+      border: 5px red solid;
+    }
+  </style>
+</head>
+<body>
+<div id="scoreboard">Score: <span id="score">0</span></div>
+<script>
+  $(function () {
+    const maxScore = 10;
+    let score = 0;
+    function spawnTarget1() {
+      const imageUrl1 = 'pepewithahat.jpg'; 
+      const $target1 = $('<img class="target" src="' + imageUrl1 + '">');
+      const maxX = $(window).width() - 80;
+      const maxY = $(window).height() - 80;
+      const x = Math.random() * maxX;
+      const y = Math.random() * maxY;
+      $target1.css({ top: y, left: x });
+      $('body').append($target1);
+      const timeout = setTimeout(() => {
+        $target1.remove();
+        spawnNext();
+      }, 1000 + Math.random() * 500);
+      $target1.on('click', function () {
+        clearTimeout(timeout);
+        $(this).remove();
+        $('#score').text(score);
+        if (score >= maxScore) {
+          alert('You win!');
+        } else {
+          spawnNext1();
+        }
+      });
+    }
+
+    function spawnTarget2() {
+      const imageUrl2 = 'pepejudgy.jpg'; 
+      const $target2 = $('<img class="target" src="' + imageUrl2 + '">');
+      const maxX2 = $(window).width() - 80;
+      const maxY2 = $(window).height() - 80;
+      const x2 = Math.random() * maxX2;
+      const y2 = Math.random() * maxY2;
+      $target2.css({ top: y2, left: x2 });
+      $('body').append($target2);
+      const timeout = setTimeout(() => {
+        $target2.remove();
+        spawnNext2();
+      }, 1000 + Math.random() * 500);
+      $target2.on('click', function () {
+        clearTimeout(timeout);
+        $(this).remove();
+        score++;
+        $('#score').text(score);
+        if (score >= maxScore) {
+          alert('You win!');
+        } else {
+          spawnNext2();
+        }
+      });
+    }
+
+    function spawnNext() {
+      const delay = 800 + Math.random() * 1000;
+      setTimeout(spawnTarget1, delay);
+    }
+
+    function spawnNext2() {
+      const delay = 800 + Math.random() * 1000;
+      setTimeout(spawnTarget2, delay);
+    }
+
+    spawnNext();
+    spawnNext2();
+  });
+</script>
+</body>
+</html>
